@@ -7,9 +7,11 @@ const http = require('http').createServer(app.callback());
 const io = require('socket.io')(http);
 const koaBody = require('koa-body');
 const authRoutes = require('./src/routes/auth');
+const cors = require('@koa/cors');
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
+app.use(cors());
 app.use(koaBody());
 app.use(authRoutes.routes());
 
