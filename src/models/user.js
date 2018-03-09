@@ -10,7 +10,7 @@ const SALT_WORK_FACTOR = 10;
  * @type {Model|*|{}|void}
  */
 const User = db.define('users', {
-  name: {type: Sequelize.STRING, allowNull: false},
+  name: {type: Sequelize.STRING, allowNull: false, unique: true},
   email: {type: Sequelize.STRING, allowNull: false, unique: true},
   password: {type: Sequelize.STRING, allowNull: false}
 });
