@@ -1,34 +1,31 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import CurrentUserMessageTab from "./currentUserMessageTab";
+import RecipientMessageTab from "./recipientMessageTab";
+import {getUserId} from "../../utils/authService";
 
-const MessageBox = () =>
-    <React.Fragment>
-      <div className="row message" id="conversation">
-        <div className="row message-body">
-          <div className="col-sm-12 message-main-receiver">
-            <div className="receiver">
-              <div className="message-text">
-                Hyy, Its Awesome..!
-              </div>
-              <span className="message-time pull-right">
-                            Sun
-                            </span>
-            </div>
-          </div>
-        </div>
+const MessageBox = ({messages, recipientId}) => (
+    <div className="row message" id="conversation">
+      {messages
+          ?
+          messages.map(message => {
+            if (message.senderId === getUserId()) {
+              return <CurrentUserMessageTab key={message.id} message={message}/>
+            }
 
-        <div className="row message-body">
-          <div className="col-sm-12 message-main-sender">
-            <div className="sender">
-              <div className="message-text">
-                Thanks n I know its awesome...!
-              </div>
-              <span className="message-time pull-right">
-                  Sun
-                </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </React.Fragment>;
+            if (message.receiverId === recipientId) {
+              return <RecipientMessageTab message={message} key={message.id}/>
+            }
+          })
+          :
+          <div>No messages</div>
+      }
+    </div>
+);
+
+MessageBox.propTypes = {
+  messages: PropTypes.array,
+  recipientId: PropTypes.number,
+};
 
 export default MessageBox;

@@ -2,8 +2,8 @@ import React from 'react';
 import gravatar from "gravatar";
 import PropType from 'prop-types';
 
-const UserCard = ({email, name, updatedAt}) => (
-    <div className="row sideBar-body">
+const UserCard = ({email, name, updatedAt, userId, onRecipientClick}) => (
+    <div className="row sideBar-body" onClick={() => onRecipientClick(userId)}>
       <div className="col-sm-3 col-xs-3 sideBar-avatar">
         <div className="avatar-icon">
           <img src={gravatar.url(email, {s: '100', r: 'x', d: 'retro'}, true)} alt="user avatar"/>
@@ -26,6 +26,8 @@ UserCard.propTypes = {
   email: PropType.string.isRequired,
   name: PropType.string.isRequired,
   updatedAt: PropType.string.isRequired,
+  onRecipientClick: PropType.func,
+  userId: PropType.number,
 };
 
 export default UserCard;

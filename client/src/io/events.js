@@ -11,9 +11,10 @@ export const getConnected = () => {
  * Emit an event with the user details.
  * @param email User email address
  * @param name User name
+ * @param userId User Id
  * @returns {*}
  */
-export const addUserEvent = (email, name) => io.emit('add user', {email, name});
+export const addUserEvent = (email, name, userId) => io.emit('add user', {email, name, userId});
 
 /**
  * Listen for an event when the user login into the application so that we get the

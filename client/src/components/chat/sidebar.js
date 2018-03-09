@@ -5,7 +5,7 @@ import {isObjectEmpty} from '../../utils/helper';
 
 class Sidebar extends React.Component {
   render() {
-    const {onlineUsers} = this.props;
+    const {onlineUsers, onRecipientClick} = this.props;
     const users = Object.keys(onlineUsers);
 
     return (
@@ -15,7 +15,15 @@ class Sidebar extends React.Component {
               users.map(email => {
                 const name = onlineUsers[email].name;
                 const key = onlineUsers[email].socketId;
-                return <UserCard key={key} email={email} name={name} updatedAt='7:00'/>
+                const userId = onlineUsers[email].userId;
+                return <UserCard
+                    key={key}
+                    email={email}
+                    name={name}
+                    userId={userId}
+                    updatedAt='7:00'
+                    onRecipientClick={onRecipientClick}
+                />
               })
               :
               <div>No users online</div>
@@ -26,7 +34,8 @@ class Sidebar extends React.Component {
 }
 
 Sidebar.propTypes = {
-  onlineUsers: PropTypes.object
+  onlineUsers: PropTypes.object,
+  onRecipientClick: PropTypes.func,
 };
 export default Sidebar;
 

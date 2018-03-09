@@ -1,6 +1,6 @@
 import {LOGOUT_USER_SUCCESSFULLY, REGISTER_USER_SUCCESSFULLY, USER_LOGIN_SUCCESS} from "../actionTypes/actionsTypes";
 import {loginUser, registerUser} from "../../api/userAPI";
-import {isLoggedIn, setToken, getUsername, getEmail} from "../../utils/authService";
+import {isLoggedIn, setToken, getUsername, getEmail, getUserId} from "../../utils/authService";
 import {addUserEvent} from "../../io/events";
 
 /**
@@ -21,7 +21,7 @@ export const login = isLoggedIn => ({
 export const userLogin = data => dispatch => loginUser(data)
     .then(response => setToken(response.data.token))
     .then(() => dispatch(login(isLoggedIn())))
-    .then(() => addUserEvent(getEmail(), getUsername()))
+    .then(() => addUserEvent(getEmail(), getUsername(), getUserId()))
     .catch(err => console.log('login error', err));
 
 /**

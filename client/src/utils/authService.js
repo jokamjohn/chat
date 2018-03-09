@@ -76,3 +76,12 @@ export const getEmail = () => {
   if (isLoggedIn()) return decode(getToken()).email;
   return '';
 };
+
+/**
+ * Get the current user Id.
+ * @returns {*}
+ */
+export const getUserId = () => {
+  if (isLoggedIn()) return decode(getToken()).userId;
+  return '';
+};
