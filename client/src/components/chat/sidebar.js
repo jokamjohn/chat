@@ -1,29 +1,32 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import UserCard from "./userCard";
+import {isObjectEmpty} from '../../utils/helper';
 
-const Sidebar = () =>
-    <React.Fragment>
-      <div className="row sideBar">
-        <div className="row sideBar-body">
-          <div className="col-sm-3 col-xs-3 sideBar-avatar">
-            <div className="avatar-icon">
-              <img src="http://shurl.esy.es/y" alt="user avatar"/>
-            </div>
-          </div>
-          <div className="col-sm-9 col-xs-9 sideBar-main">
-            <div className="row">
-              <div className="col-sm-8 col-xs-8 sideBar-name">
-                    <span className="name-meta">Ankit Jain
-                  </span>
-              </div>
-              <div className="col-sm-4 col-xs-4 pull-right sideBar-time">
-                    <span className="time-meta pull-right">18:18
-                  </span>
-              </div>
-            </div>
-          </div>
+class Sidebar extends React.Component {
+  render() {
+    const {onlineUsers} = this.props;
+    const users = Object.keys(onlineUsers);
+
+    return (
+        <div className="row sideBar">
+          {!isObjectEmpty(onlineUsers)
+              ?
+              users.map(email => {
+                const name = onlineUsers[email].name;
+                const key = onlineUsers[email].socketId;
+                return <UserCard key={key} email={email} name={name} updatedAt='7:00'/>
+              })
+              :
+              <div>No users online</div>
+          }
         </div>
-      </div>
-    </React.Fragment>;
+    )
+  }
+}
 
+Sidebar.propTypes = {
+  onlineUsers: PropTypes.object
+};
 export default Sidebar;
 
