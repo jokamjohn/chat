@@ -2,11 +2,6 @@ import socket from 'socket.io-client';
 
 const io = socket('http://localhost:5000');
 
-export const getConnected = () => {
-  io.on('connected', data => console.log('server response', data.message));
-  io.emit('server', {message: 'From the client'})
-};
-
 /**
  * Emit an event with the user details.
  * @param email User email address

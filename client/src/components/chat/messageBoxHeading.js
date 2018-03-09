@@ -1,9 +1,8 @@
 import React from 'react';
 import gravatar from "gravatar";
-import {getUsername} from "../../utils/authService";
 import PropTypes from "prop-types";
 
-const MessageBoxHeading = ({email}) => (
+const MessageBoxHeading = ({email, name}) => (
     <div className="row heading">
       <div className="col-sm-2 col-md-1 col-xs-3 heading-avatar">
         <div className="heading-avatar-icon">
@@ -11,7 +10,7 @@ const MessageBoxHeading = ({email}) => (
         </div>
       </div>
       <div className="col-sm-8 col-xs-7 heading-name">
-        <a className="heading-name-meta">{getUsername()}</a>
+        <a className="heading-name-meta">{name}</a>
         <span>Online</span>
       </div>
     </div>
@@ -19,6 +18,7 @@ const MessageBoxHeading = ({email}) => (
 
 MessageBoxHeading.proptypes = {
   email: PropTypes.string,
+  name: PropTypes.string,
 };
 
 export default MessageBoxHeading;

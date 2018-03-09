@@ -3,7 +3,7 @@ import gravatar from "gravatar";
 import PropType from 'prop-types';
 
 const UserCard = ({email, name, updatedAt, userId, onRecipientClick}) => (
-    <div className="row sideBar-body" onClick={() => onRecipientClick(userId)}>
+    <div className="row sideBar-body" onClick={() => onRecipientClick(userId, email, name)}>
       <div className="col-sm-3 col-xs-3 sideBar-avatar">
         <div className="avatar-icon">
           <img src={gravatar.url(email, {s: '100', r: 'x', d: 'retro'}, true)} alt="user avatar"/>

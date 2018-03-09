@@ -6,7 +6,7 @@ import {getUserId} from "../../utils/authService";
 
 const MessageBox = ({messages, recipientId}) => (
     <div className="row message" id="conversation">
-      {messages
+      {messages.length > 0
           ?
           messages.map(message => {
             if (message.senderId === getUserId()) {

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import UserCard from "./userCard";
 import {isObjectEmpty} from '../../utils/helper';
+import {getEmail} from "../../utils/authService";
 
 class Sidebar extends React.Component {
   render() {
@@ -13,6 +14,10 @@ class Sidebar extends React.Component {
           {!isObjectEmpty(onlineUsers)
               ?
               users.map(email => {
+                if (email === getEmail()) {
+                  delete onlineUsers.email;
+                  return;
+                }
                 const name = onlineUsers[email].name;
                 const key = onlineUsers[email].socketId;
                 const userId = onlineUsers[email].userId;
