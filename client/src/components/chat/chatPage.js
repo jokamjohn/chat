@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './style.css';
 import UserAvatar from "./userAvator";
 import Sidebar from "./sidebar";
@@ -7,13 +8,13 @@ import MessageBox from "./messageBox";
 import ReplyBox from "./replyBox";
 import {addUserEvent, getDirectMessageEvent, getOnlineUserEvent, getOwnDirectMessageEvent} from "../../io/events";
 import {getEmail, getUserId, getUsername} from "../../utils/authService";
-import {getChatMessages} from "../../api/chatAPI";
+import {connect} from 'react-redux';
+import {addChatMessage, getChatMessagesFromAPI} from "../../redux/actions/chats";
+import {addOnlineUsers} from "../../redux/actions/users";
 
 class ChatPage extends React.Component {
 
   state = {
-    onlineUsers: {},
-    messages: [],
     recipientId: 0,
     recipientEmail: '',
     recipientName: '',
@@ -21,31 +22,33 @@ class ChatPage extends React.Component {
   };
 
   componentDidMount() {
-    getOnlineUserEvent(users => this.setState({onlineUsers: users}));
+    const {dispatch} = this.props;
+    getOnlineUserEvent(users => dispatch(addOnlineUsers(users)));
     addUserEvent(getEmail(), getUsername(), getUserId());
-    getDirectMessageEvent(message => this.setState({messages: [...this.state.messages, message]}));
-    getOwnDirectMessageEvent(message => this.setState({messages: [...this.state.messages, message]}));
+    getDirectMessageEvent(message => dispatch(addChatMessage(message)));
+    getOwnDirectMessageEvent(message => dispatch(addChatMessage(message)));
   }
 
   /**
    * Get the user of the clicked on recipient and set it in state.
-   * @param userId Recipient user Id
+   * @param recipientId Recipient user Id
    * @param email Recipient email address
    * @param name Recipient name
    * @param socketId
    */
-  getRecipientUserInfo = (userId, email, name, socketId) => {
+  getRecipientUserInfo = (recipientId, email, name, socketId) => {
     this.setState({
-      recipientId: userId,
+      recipientId: recipientId,
       recipientEmail: email,
       recipientName: name,
       recipientSocketId: socketId,
     });
-    getChatMessages(userId).then(chat => this.setState({messages: chat.data.messages}));
+    this.props.dispatch(getChatMessagesFromAPI(recipientId));
   };
 
   render() {
-    const {onlineUsers, recipientId, messages, recipientEmail, recipientName, recipientSocketId} = this.state;
+    const {recipientId, recipientEmail, recipientName, recipientSocketId} = this.state;
+    const {messages, onlineUsers} = this.props;
     return (
         <div className="container app">
           <div className="row app-one">
@@ -75,4 +78,12 @@ class ChatPage extends React.Component {
   }
 }
 
-export default ChatPage;
+const mapStateToProps = state => state;
+
+ChatPage.propTypes = {
+  dispatch: PropTypes.func,
+  message: PropTypes.array,
+  onlineUsers: PropTypes.object,
+};
+
+export default connect(mapStateToProps)(ChatPage);
