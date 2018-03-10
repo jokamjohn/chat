@@ -5,7 +5,7 @@ import Sidebar from "./sidebar";
 import MessageBoxHeading from "./messageBoxHeading";
 import MessageBox from "./messageBox";
 import ReplyBox from "./replyBox";
-import {addUserEvent, loginEvent} from "../../io/events";
+import {addUserEvent, getDirectMessageEvent, getOnlineUserEvent, getOwnDirectMessageEvent} from "../../io/events";
 import {getEmail, getUserId, getUsername} from "../../utils/authService";
 import {getChatMessages} from "../../api/chatAPI";
 
@@ -17,12 +17,14 @@ class ChatPage extends React.Component {
     recipientId: 0,
     recipientEmail: '',
     recipientName: '',
+    recipientSocketId: '',
   };
 
   componentDidMount() {
-    const {onlineUsers} = this.state;
-    loginEvent(users => this.setState({onlineUsers: Object.assign(onlineUsers, users)}));
+    getOnlineUserEvent(users => this.setState({onlineUsers: users}));
     addUserEvent(getEmail(), getUsername(), getUserId());
+    getDirectMessageEvent(message => this.setState({messages: [...this.state.messages, message]}));
+    getOwnDirectMessageEvent(message => this.setState({messages: [...this.state.messages, message]}));
   }
 
   /**
@@ -30,18 +32,20 @@ class ChatPage extends React.Component {
    * @param userId Recipient user Id
    * @param email Recipient email address
    * @param name Recipient name
+   * @param socketId
    */
-  getRecipientUserInfo = (userId, email, name) => {
+  getRecipientUserInfo = (userId, email, name, socketId) => {
     this.setState({
       recipientId: userId,
       recipientEmail: email,
-      recipientName: name
+      recipientName: name,
+      recipientSocketId: socketId,
     });
     getChatMessages(userId).then(chat => this.setState({messages: chat.data.messages}));
   };
 
   render() {
-    const {onlineUsers, recipientId, messages, recipientEmail, recipientName} = this.state;
+    const {onlineUsers, recipientId, messages, recipientEmail, recipientName, recipientSocketId} = this.state;
     return (
         <div className="container app">
           <div className="row app-one">
@@ -57,7 +61,7 @@ class ChatPage extends React.Component {
                   <React.Fragment>
                     <MessageBoxHeading email={recipientEmail} name={recipientName}/>
                     <MessageBox messages={messages} recipientId={recipientId}/>
-                    <ReplyBox/>
+                    <ReplyBox recipientId={recipientId} socketId={recipientSocketId}/>
                   </React.Fragment>
                   :
                   <div>

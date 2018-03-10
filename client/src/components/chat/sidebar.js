@@ -21,13 +21,14 @@ class Sidebar extends React.Component {
                 const name = onlineUsers[email].name;
                 const key = onlineUsers[email].socketId;
                 const userId = onlineUsers[email].userId;
+                const socketId = onlineUsers[email].socketId;
                 return <UserCard
                     key={key}
                     email={email}
                     name={name}
                     userId={userId}
-                    updatedAt='7:00'
                     onRecipientClick={onRecipientClick}
+                    socketId={socketId}
                 />
               })
               :
