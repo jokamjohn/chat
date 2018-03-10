@@ -24,6 +24,7 @@ router.use(authMiddleware);
  * object.
  */
 router.param('receiverId', async (id, cxt, next) => {
+  if (!cxt.decode) return;
   const identifier = Utils.getIdentifier(cxt.decode.userId, id);
   cxt.messages = await Message.getChatMessage(identifier);
   return next();
