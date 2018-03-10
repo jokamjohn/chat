@@ -1,6 +1,7 @@
 import React from 'react';
 import gravatar from "gravatar";
 import PropTypes from "prop-types";
+import {titleCaseText} from "../../utils/helper";
 
 const MessageBoxHeading = ({email, name}) => (
     <div className="row heading">
@@ -10,7 +11,7 @@ const MessageBoxHeading = ({email, name}) => (
         </div>
       </div>
       <div className="col-sm-8 col-xs-7 heading-name">
-        <a className="heading-name-meta">{name}</a>
+        <a className="heading-name-meta">{titleCaseText(name)}</a>
         <span>Online</span>
       </div>
     </div>

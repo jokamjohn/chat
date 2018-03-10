@@ -14,3 +14,10 @@ export const getReadableDate = date => {
   const dateObject = new Date(Date.parse(date));
   return dateObject.toDateString();
 };
+
+/**
+ * Title case a sentence.
+ * @param str
+ */
+export const titleCaseText = str => str.replace(/\w\S*/g, txt => `${txt.charAt(0).toUpperCase()}${txt.substr(1).toLowerCase()}`);
+

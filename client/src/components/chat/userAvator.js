@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import gravatar from "gravatar";
+import {getUsername} from "../../utils/authService";
+import {titleCaseText} from "../../utils/helper";
 
 const UserAvatar = ({email}) => (
     <div className="row heading">
@@ -10,7 +12,8 @@ const UserAvatar = ({email}) => (
         </div>
       </div>
       <div className="col-sm-8 col-xs-7 heading-name">
-        <a className="heading-name-meta">Online Users</a>
+        <span className="heading-name-meta"><strong>{titleCaseText(getUsername())}</strong></span>
+        <span>Online Users</span>
       </div>
     </div>
 );
