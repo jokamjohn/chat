@@ -57,6 +57,24 @@ module.exports = io => {
     });
 
     /**
+     * when the client emits 'typing', we broadcast it to others
+     */
+    client.on('typing', () => {
+      client.broadcast.emit('typing', {
+        email: client.username
+      });
+    });
+
+    /**
+     * when the client emits 'stop typing', we broadcast it to others
+     */
+    client.on('stop typing', () => {
+      client.broadcast.emit('stop typing', {
+        email: client.username
+      });
+    });
+
+    /**
      * Server  listening for an event when a client is disconnected.
      * At this point the disconnected client is removed from the list of online users
      */

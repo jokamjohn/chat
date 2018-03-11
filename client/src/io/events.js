@@ -50,3 +50,29 @@ export const getOwnDirectMessageEvent = cb => io.on('own msg', chat => cb(chat))
  * @returns {*}
  */
 export const logoutUserEvent = () => io.emit('log out');
+
+/**
+ * Emit an event when a user is typing
+ * @returns {*}
+ */
+export const typingEvent = () => io.emit('typing');
+
+/**
+ * Emit an event when a user stops typing.
+ * @returns {*}
+ */
+export const stopTypingEvent = () => io.emit('stop typing');
+
+/**
+ * Listen for an event for user typing
+ * @param cb
+ * @returns {*}
+ */
+export const onTypingEvent = cb => io.on('typing', ({email}) => cb(email));
+
+/**
+ * Listen for an event for when the user is done typing.
+ * @param cb
+ * @returns {*}
+ */
+export const onStopTypingEvent = cb => io.on('stop typing', ({email}) => cb(email));

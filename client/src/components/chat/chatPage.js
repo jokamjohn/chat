@@ -10,7 +10,7 @@ import {addUserEvent, getDirectMessageEvent, getOnlineUserEvent, getOwnDirectMes
 import {getEmail, getUserId, getUsername} from "../../utils/authService";
 import {connect} from 'react-redux';
 import {addChatMessage, getChatMessagesFromAPI} from "../../redux/actions/chats";
-import {addOnlineUsers} from "../../redux/actions/users";
+import {addOnlineUsers} from "../../redux/actions/events";
 
 class ChatPage extends React.Component {
 
@@ -48,7 +48,7 @@ class ChatPage extends React.Component {
 
   render() {
     const {recipientId, recipientEmail, recipientName, recipientSocketId} = this.state;
-    const {messages, onlineUsers} = this.props;
+    const {messages, onlineUsers, dispatch} = this.props;
     return (
         <div className="container app">
           <div className="row app-one">
@@ -64,7 +64,7 @@ class ChatPage extends React.Component {
                   <React.Fragment>
                     <MessageBoxHeading email={recipientEmail} name={recipientName}/>
                     <MessageBox messages={messages} recipientId={recipientId}/>
-                    <ReplyBox recipientId={recipientId} socketId={recipientSocketId}/>
+                    <ReplyBox recipientId={recipientId} socketId={recipientSocketId} dispatch={dispatch}/>
                   </React.Fragment>
                   :
                   <div>
