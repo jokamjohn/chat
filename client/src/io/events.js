@@ -1,7 +1,7 @@
 import socket from 'socket.io-client';
 import {getUserId} from "../utils/authService";
 
-const io = socket('http://localhost:5000');
+const io = socket(process.env.REACT_APP_API_BASE_URL);
 
 /**
  * Emit an event with the user details.
