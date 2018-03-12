@@ -1,5 +1,6 @@
 import {GET_CHAT_MESSAGE, GET_CONVERSATION_MESSAGES} from "../actionTypes/actionsTypes";
 import {getChatMessages} from "../../api/chatAPI";
+import {logout} from "./auth";
 
 /**
  * Action to add chat messages to state.
@@ -27,4 +28,10 @@ export const addChatMessage = message => ({
  * @returns {*|PromiseLike<{type, messages: *}>|Promise<{type, messages: *}>}
  */
 export const getChatMessagesFromAPI = recipientId => dispatch => getChatMessages(recipientId)
-    .then(res => dispatch(addChatMessages(res.data.messages)));
+    .then(res => dispatch(addChatMessages(res.data.messages)))
+    .catch(err => {
+      if (err.response) {
+        if (err.response.status === 400) return dispatch(logout(false));
+        return;
+      }
+    });
