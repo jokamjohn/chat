@@ -1,4 +1,4 @@
-import {GET_CHAT_MESSAGE, GET_CONVERSATION_MESSAGES} from "../actionTypes/actionsTypes";
+import {GET_CHAT_MESSAGE, GET_CONVERSATION_MESSAGES, GET_OWN_CHAT_MESSAGE} from "../actionTypes/actionsTypes";
 import {getChatMessages} from "../../api/chatAPI";
 import {logout} from "./auth";
 
@@ -19,6 +19,16 @@ export const addChatMessages = messages => ({
  */
 export const addChatMessage = message => ({
   type: GET_CHAT_MESSAGE,
+  message
+});
+
+/**
+ * Action to add own message to messages in state
+ * @param message
+ * @returns {{type, message: *}}
+ */
+export const addOwnChatMessage = message => ({
+  type: GET_OWN_CHAT_MESSAGE,
   message
 });
 

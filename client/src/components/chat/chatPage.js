@@ -9,7 +9,7 @@ import ReplyBox from "./replyBox";
 import {addUserEvent, getDirectMessageEvent, getOnlineUserEvent, getOwnDirectMessageEvent} from "../../io/events";
 import {getEmail, getUserId, getUsername} from "../../utils/authService";
 import {connect} from 'react-redux';
-import {addChatMessage, getChatMessagesFromAPI} from "../../redux/actions/chats";
+import {addChatMessage, addOwnChatMessage, getChatMessagesFromAPI} from "../../redux/actions/chats";
 import {addOnlineUsers} from "../../redux/actions/events";
 
 class ChatPage extends React.Component {
@@ -26,7 +26,7 @@ class ChatPage extends React.Component {
     getOnlineUserEvent(users => dispatch(addOnlineUsers(users)));
     addUserEvent(getEmail(), getUsername(), getUserId());
     getDirectMessageEvent(message => dispatch(addChatMessage(message)));
-    getOwnDirectMessageEvent(message => dispatch(addChatMessage(message)));
+    getOwnDirectMessageEvent(message => dispatch(addOwnChatMessage(message)));
   }
 
   /**

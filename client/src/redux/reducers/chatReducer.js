@@ -1,5 +1,5 @@
 import initialState from "../initialState";
-import {GET_CHAT_MESSAGE, GET_CONVERSATION_MESSAGES} from "../actionTypes/actionsTypes";
+import {GET_CHAT_MESSAGE, GET_CONVERSATION_MESSAGES, GET_OWN_CHAT_MESSAGE} from "../actionTypes/actionsTypes";
 
 export default function (state = initialState.messages, action) {
   switch (action.type) {
@@ -9,6 +9,12 @@ export default function (state = initialState.messages, action) {
       ];
 
     case GET_CHAT_MESSAGE:
+      return [
+        ...state,
+        action.message
+      ];
+
+    case GET_OWN_CHAT_MESSAGE:
       return [
         ...state,
         action.message
